@@ -37,7 +37,13 @@ var source = args[1]
 
 
 if (args.length < 2 || args.length > 4) {
-    var usage = "Usage:\n   phantomjs --ssl-protocol=any respec2html.js [-e] [-w] respec-source [html-output] [timeout]\n" +
+    var usage = "Usage:\n   phantomjs --ssl-protocol=tlsv1 " +
+                // ignore-ssl-errors is needed to access specref.jit.su
+                // since phantomjs doesn't support SNT at the moment
+                // see https://github.com/ariya/phantomjs/issues/11239 and
+                // https://github.com/w3c/respec/issues/314#issuecomment-61792481
+                "--ignore-ssl-errors=true respec2html.js [-e] [-w] " +
+                "respec-source [html-output] [timeout]\n" +
                 "   respec-source  ReSpec source file, or an URL to the file" +
                 "   [-e]           Report ReSpec errors on stderr" +
                 "   [-w]           Report ReSpec warnings on stderr" +
