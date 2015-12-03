@@ -36,7 +36,7 @@ function replaceMapFilename(respecJs, outPath){
  * @param  {String} version The version of the script.
  * @return {Promise} Resolves when done writing the files.
  */
-function appendBoilerplate(outPath, version) {
+function appendBoilerplate(outPath, version, profile) {
   return async(function*(optimizedJs, sourceMap) {
     const respecJs = `"use strict";
 /* ReSpec ${version}
@@ -45,7 +45,7 @@ Documentation: http://w3.org/respec/.
 See original source for licenses: https://github.com/w3c/respec */
 window.respecVersion = "${version}";
 ${optimizedJs}
-require(['profile-w3c-common']);`;
+require([profile]);`;
     const newSource = replaceMapFilename(respecJs, outPath);
     const promiseToWriteJs = fsp.writeFile(outPath, newSource.source, "utf-8");
     const promiseToWriteMap = fsp.writeFile(newSource.mapPath, sourceMap, "utf-8");
@@ -76,7 +76,6 @@ var Builder = {
     return async.task(function*() {
       // optimisation settings
       const version = options.version || (yield this.getRespecVersion());
-      const outputWritter = appendBoilerplate(options.out, version);
       const config = {
         generateSourceMaps: true,
         mainConfigFile: "js/profile-w3c-common.js",
@@ -90,7 +89,7 @@ var Builder = {
           "requireLib": "../node_modules/requirejs/require",
           "webidl2": "../node_modules/webidl2/lib/webidl2",
         },
-        name: "profile-w3c-common",
+        name: options.name || "profile-w3c-common",
         deps: [
           "core/jquery-enhanced",
           "jquery",
@@ -101,6 +100,7 @@ var Builder = {
         preserveLicenseComments: false,
         useStrict: true,
       };
+      const outputWritter = appendBoilerplate(options.out, version, config.name);
       const promiseToWrite = new Promise((resolve, reject)=>{
         config.out = (optimizedJs, sourceMap) => {
           outputWritter(optimizedJs, sourceMap)
