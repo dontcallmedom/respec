@@ -682,16 +682,16 @@ define(
             },
 
             makeMarkup:    function (id) {
-                var $df = $("<div></div>");
+                var $df = $("<div></div>").attr({"class":"converted"});
                 var attr = { "class": "idl" };
                 if (id) attr.id = id;
                 var $pre = $("<pre></pre>").attr(attr);
                 var h = this.writeAsWebIDL(this.parent, -1);
-                $pre.html(h.text());
+                $pre.text(h.text());
                 $df.append($pre);
                 if (!this.conf.noLegacyStyle) $df.append(this.writeAsHTML(this.parent));
                 this.mergeWebIDL(this.parent.children[0]);
-                return $df.children();
+                return $df;
             },
 
             parseParameterized: function (str) {
@@ -1247,7 +1247,7 @@ define(
                                       })
                                       .join("")
                     ;
-                    var ret = idlInterfaceTmpl({
+                    return idlInterfaceTmpl({
                         obj:        obj
                     ,   indent:     indent
                     ,   id:         id
@@ -1256,8 +1256,6 @@ define(
                     ,   callback:   obj.callback ? "callback " : ""
                     ,   children:   children
                     });
-                    console.log(ret);
-                    return ret;
                 }
 
                 else if (obj.type === "exception") {
