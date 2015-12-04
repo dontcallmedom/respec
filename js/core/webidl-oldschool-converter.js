@@ -690,7 +690,7 @@ define(
                 $pre.text(h.text());
                 $df.append($pre);
                 if (!this.conf.noLegacyStyle) $df.append(this.writeAsHTML(this.parent));
-                this.mergeWebIDL(this.parent.children[0]);
+                //this.mergeWebIDL(this.parent.children[0]);
                 return $df;
             },
 
@@ -801,16 +801,21 @@ define(
                     this.writeSerializerAsHTML(sn.element("div", {}, sec), things[0]);
                     return;
                 }
-                var dl = sn.element("dl", { "class": type + "s" }, sec);
+                var dl = sn.element("dl", { "class": type + "s", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
                 for (var j = 0; j < things.length; j++) {
                     var it = things[j];
                     var id = (type == "method") ? this.makeMethodID(curLnk, it) :
                         (type == "constructor") ? this.makeMethodID("widl-ctor-", it)
                         : sn.idThatDoesNotExist(curLnk + it.refId);
                     var dt = sn.element("dt", { id: id }, dl);
-                    sn.element("code", {}, dt, it.unescapedId);
-                    if (it.isStatic) dt.append(this.doc.createTextNode(", static"));
                     var desc = sn.element("dd", {}, dl, [it.description]);
+
+                    var dfn = sn.element("dfn", {}, dt);
+                    if ($(desc).find("dfn:contains('" + it.unescapedId + "')").length > 0) {
+                        dfn = dt;
+                    }
+                    sn.element("code", {}, dfn, it.unescapedId);
+                    if (it.isStatic) dt.append(this.doc.createTextNode(", static"));
                     if (type == "method" || type == "constructor") {
                         if (it.params.length) {
                             var table = sn.element("table", { "class": "parameters" }, desc);
@@ -1072,12 +1077,17 @@ define(
                            sn.element("a", { "class": "idlType" }, null, obj.unescapedId),
                            sn.text(" Members")];
                     if (!this.conf.noIDLSectionTitle) sn.element("h2", {}, sec, cnt);
-                    var dl = sn.element("dl", { "class": "dictionary-members" }, sec);
+                    var dl = sn.element("dl", { "class": "dictionary-members", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
-                        sn.element("code", {}, dt, it.unescapedId);
                         var desc = sn.element("dd", {}, dl, [it.description]);
+
+                        var dfn = sn.element("dfn", {}, dt);
+                        if ($(desc).find("dfn:contains('" + it.unescapedId + "')").length > 0) {
+                            dfn = dt;
+                        }
+                        sn.element("code", {}, dfn, it.unescapedId);
                         sn.text(" of type ", dt);
                         if (it.array) {
                             for (var i = 0, n = it.arrayCount; i < n; i++) sn.text("array of ", dt);
@@ -1114,11 +1124,12 @@ define(
                            sn.element("a", { "class": "idlType" }, null, obj.unescapedId),
                            sn.text(" Parameters")];
                     if (!this.conf.noIDLSectionTitle) sn.element("h2", {}, sec, cnt);
-                    var dl = sn.element("dl", { "class": "callback-members" }, sec);
+                    var dl = sn.element("dl", { "class": "callback-members", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
-                        sn.element("code", {}, dt, it.unescapedId);
+                        var dfn = sn.element("dfn", {}, dt);
+                        sn.element("code", {}, dfn, it.unescapedId);
                         var desc = sn.element("dd", {}, dl, [it.description]);
                         sn.text(" of type ", dt);
                         if (it.array) {
@@ -1148,14 +1159,15 @@ define(
                     var things = obj.children;
                     if (things.length === 0) return df;
 
-                    var sec = sn.element("table", { "class": "simple" }, df);
+                    var sec = sn.element("table", { "class": "simple", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, df);
                     sn.element("tr", {}, sec, [sn.element("th", { colspan: 2 }, null, [sn.text("Enumeration description")])]);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var tr = sn.element("tr", {}, sec)
                         ,   td1 = sn.element("td", {}, tr)
                         ;
-                        sn.element("code", { "id": "idl-def-" + obj.refId + "." + it.refId }, td1, it.unescapedId);
+                        var dfn = sn.element("dfn", {}, td1);
+                        sn.element("code", { "id": "idl-def-" + obj.refId + "." + it.refId }, dfn, it.unescapedId);
                         sn.element("td", {}, tr, [it.description]);
                     }
                     return df;
@@ -1496,7 +1508,7 @@ define(
 
                 var infNames = [];
                 $idl.each(function () {
-                    var w = new WebIDLProcessor({ noIDLSorting: conf.noIDLSorting, msg: msg, doc: doc, conf: conf })
+                    var w = new WebIDLProcessor({ noIDLSorting: true, msg: msg, doc: doc, conf: conf })
                     ,   inf = w.definition($(this))
                     ,   $df = w.makeMarkup(inf.htmlID);
                     $(this).replaceWith($df);
