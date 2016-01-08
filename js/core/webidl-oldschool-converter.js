@@ -748,7 +748,9 @@ define(
                     generatedDescription += ".";
                     sn.element("p", {}, div, generatedDescription);
                 }
-                sn.element("p", {}, div, [it.description]);
+                if (it.description.textContent) {
+                    sn.element("p", {}, div, [it.description]);
+                }
             },
 
             writeIterableAsHTML: function (parent, iterable) {
