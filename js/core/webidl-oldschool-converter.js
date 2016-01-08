@@ -810,9 +810,11 @@ define(
                     var dt = sn.element("dt", { id: id }, dl);
                     var desc = sn.element("dd", {}, dl, [it.description]);
 
-                    var dfn = sn.element("dfn", {}, dt);
+                    var dfn;
                     if ($(desc).find("dfn:contains('" + it.unescapedId + "')").length > 0) {
                         dfn = dt;
+                    } else {
+                        dfn = sn.element("dfn", {}, dt);
                     }
                     sn.element("code", {}, dfn, it.unescapedId);
                     if (it.isStatic) dt.append(this.doc.createTextNode(", static"));
@@ -1083,9 +1085,11 @@ define(
                         var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
                         var desc = sn.element("dd", {}, dl, [it.description]);
 
-                        var dfn = sn.element("dfn", {}, dt);
+                        var dfn;
                         if ($(desc).find("dfn:contains('" + it.unescapedId + "')").length > 0) {
                             dfn = dt;
+                        } else {
+                            dfn = sn.element("dfn", {}, dt);
                         }
                         sn.element("code", {}, dfn, it.unescapedId);
                         sn.text(" of type ", dt);
