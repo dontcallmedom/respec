@@ -1077,7 +1077,7 @@ define(
                            sn.element("a", { "class": "idlType" }, null, obj.unescapedId),
                            sn.text(" Members")];
                     if (!this.conf.noIDLSectionTitle) sn.element("h2", {}, sec, cnt);
-                    var dl = sn.element("dl", { "class": "dictionary-members", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
+                    var dl = sn.element("dl", { "class": "dictionary-members", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
