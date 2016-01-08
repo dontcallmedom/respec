@@ -1554,7 +1554,7 @@ window.simpleNode.prototype = {
         id = id.split(/[^\-.0-9a-zA-Z_]/).join("-");
         id = id.replace(/^-+/g, "");
         id = id.replace(/-+$/, "");
-        if (id.length > 0 && /^[^a-z]/.test(id)) id = "x" + id;
+        if (id.length > 0 && /^[^a-zA-Z]/.test(id)) id = "x" + id;
         if (id.length === 0) id = "generatedID";
         return id;
     },
