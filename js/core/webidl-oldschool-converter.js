@@ -801,7 +801,7 @@ define(
                     this.writeSerializerAsHTML(sn.element("div", {}, sec), things[0]);
                     return;
                 }
-                var dl = sn.element("dl", { "class": type + "s", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
+                var dl = sn.element("dl", { "class": type + "s", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, sec);
                 for (var j = 0; j < things.length; j++) {
                     var it = things[j];
                     var id = (type == "method") ? this.makeMethodID(curLnk, it) :
@@ -1124,7 +1124,7 @@ define(
                            sn.element("a", { "class": "idlType" }, null, obj.unescapedId),
                            sn.text(" Parameters")];
                     if (!this.conf.noIDLSectionTitle) sn.element("h2", {}, sec, cnt);
-                    var dl = sn.element("dl", { "class": "callback-members", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, sec);
+                    var dl = sn.element("dl", { "class": "callback-members", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
@@ -1159,7 +1159,7 @@ define(
                     var things = obj.children;
                     if (things.length === 0) return df;
 
-                    var sec = sn.element("table", { "class": "simple", "dfn-for": obj.unescapedId, "link-for": obj.unescapedId }, df);
+                    var sec = sn.element("table", { "class": "simple", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, df);
                     sn.element("tr", {}, sec, [sn.element("th", { colspan: 2 }, null, [sn.text("Enumeration description")])]);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
