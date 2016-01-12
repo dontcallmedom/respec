@@ -809,7 +809,7 @@ define(
                     var id = (type == "method") ? this.makeMethodID(curLnk, it) :
                         (type == "constructor") ? this.makeMethodID("widl-ctor-", it)
                         : sn.idThatDoesNotExist(curLnk + it.refId);
-                    var dt = sn.element("dt", { id: id }, dl);
+                    var dt = sn.element("dt", { }, dl);
                     var desc = sn.element("dd", {}, dl, [it.description]);
 
                     var dfn;
@@ -1032,7 +1032,7 @@ define(
                         var dl = sn.element("dl", { "class": type + "s" }, sec);
                         for (var j = 0; j < things.length; j++) {
                             var it = things[j];
-                            var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
+                            var dt = sn.element("dt", {  }, dl);
                             sn.element("code", {}, dt, it.unescapedId);
                             var desc = sn.element("dd", {}, dl, [it.description]);
                             if (type == "field") {
@@ -1084,7 +1084,7 @@ define(
                     var dl = sn.element("dl", { "class": "dictionary-members", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
-                        var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
+                        var dt = sn.element("dt", {  }, dl);
                         var desc = sn.element("dd", {}, dl, [it.description]);
 
                         var dfn;
@@ -1133,7 +1133,7 @@ define(
                     var dl = sn.element("dl", { "class": "callback-members", "data-dfn-for": obj.unescapedId, "data-link-for": obj.unescapedId }, sec);
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
-                        var dt = sn.element("dt", { id: curLnk + it.refId }, dl);
+                        var dt = sn.element("dt", {  }, dl);
                         var dfn = sn.element("dfn", {}, dt);
                         sn.element("code", {}, dfn, it.unescapedId);
                         var desc = sn.element("dd", {}, dl, [it.description]);
