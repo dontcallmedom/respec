@@ -45,7 +45,7 @@ Documentation: http://w3.org/respec/.
 See original source for licenses: https://github.com/w3c/respec */
 window.respecVersion = "${version}";
 ${optimizedJs}
-require([profile]);`;
+require(["${profile}"]);`;
     const newSource = replaceMapFilename(respecJs, outPath);
     const promiseToWriteJs = fsp.writeFile(outPath, newSource.source, "utf-8");
     const promiseToWriteMap = fsp.writeFile(newSource.mapPath, sourceMap, "utf-8");
@@ -78,7 +78,7 @@ var Builder = {
       const version = options.version || (yield this.getRespecVersion());
       const config = {
         generateSourceMaps: true,
-        mainConfigFile: "js/profile-w3c-common.js",
+        mainConfigFile: "js/profile-webidlconvert.js",
         baseUrl: pth.join(__dirname, "../js/"),
         optimize: options.optimize || "uglify2",
         paths: {
