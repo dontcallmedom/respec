@@ -107,7 +107,7 @@ const tasks = {
           }
           // does it try to load ReSpec locally or remotely
           const remoteScriptQuery = "script[src='https://www.w3.org/Tools/respec/respec-w3c-common']";
-          const query = `script[data-main*=profile-w3c-common], ${remoteScriptQuery}`;
+          const query = `script[data-main*=profile-w3c-common], ${remoteScriptQuery}, script[data-main*=profile-webidlconvert]`;
           return (document.querySelector(query)) ? true : false;
         });
       if(!isRespecDoc){
@@ -178,6 +178,8 @@ function makeConsoleMsgHandler(nightmare) {
         }
         console.error(colors.warn(`😳 ${output}`));
         break;
+          default:
+          console.log(colors.warn(`😳 ${output}`));
       }
       if (abortOnError || abortOnWarning) {
         nightmare.proc.kill();
