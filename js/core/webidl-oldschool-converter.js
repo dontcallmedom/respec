@@ -1135,8 +1135,7 @@ define(
                     for (var j = 0; j < things.length; j++) {
                         var it = things[j];
                         var dt = sn.element("dt", {  }, dl);
-                        var dfn = sn.element("dfn", {}, dt);
-                        sn.element("code", {}, dfn, it.unescapedId);
+                        sn.element("code", {}, dt, it.unescapedId);
                         var desc = sn.element("dd", {}, dl, [it.description]);
                         sn.text(" of type ", dt);
                         if (it.array) {
