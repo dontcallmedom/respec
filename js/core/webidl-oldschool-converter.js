@@ -1510,7 +1510,7 @@ define(
                         cb();
                     };
                 if (!$idl.length) return finish();
-                $(doc).find("head link").first().before($("<style/>").text(css));
+
 
                 var infNames = [];
                 $idl.each(function () {
