@@ -27,7 +27,7 @@ const buildWebidlConvert = async(function*() {
   for(let aVersion of versionsToBuild){
     const isLatest = aVersion === "latest";
     const version = (isLatest) ? yield Builder.getRespecVersion() : aVersion;
-    const outFile = "respec-webidlconvert.js" + ((isLatest) ? ".js" : `-${aVersion}.js`);
+    const outFile = "respec-webidlconvert" + ((isLatest) ? ".js" : `-${aVersion}.js`);
     const out = path.join(builds, outFile);
     console.log(colors.info(`  ⏲  Generating ${outFile}. Please wait...`));
       yield Builder.build({out, version, name: "profile-webidlconvert"});
