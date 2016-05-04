@@ -683,7 +683,7 @@ define(
             },
 
             makeMarkup:    function (id) {
-                var $df = $("<div></div>").attr({"class":"converted"});
+                var $df = $("<div></div>");
                 var attr = { "class": "idl" };
                 if (id) attr.id = id;
                 var $pre = $("<pre></pre>").attr(attr);
